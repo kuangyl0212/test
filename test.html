@@ -36,6 +36,7 @@
 			transition: all 0.1s;
 			perspective: 1500px;
 			transform-style: preserve-3d;
+			transform-origin: 50% 50%;
 			color: #fff;
 			font-size: 36px;
 		}
@@ -44,7 +45,7 @@
 <body>
 	<div class="container">
 		<div class="box">
-			试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果
+			试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果试一下文字效果文字效果文字效果
 		</div>
 	</div>
 	<script>
@@ -82,23 +83,15 @@
 				var w = (mouse.x - center.x) / 2
 				var h = (mouse.y - center.y) / 2
 				var l = getDistance(mouse, center)
-				// console.log(w, h)
-				var s1 = mouse.x - center.x
-				var s2 = mouse.y - center.y
 				var deg = base * (l / (L / 2))
-				var x0 = Math.pow(w, 2) / h
-				if (s2 < 0) {
-					x0 = - x0
+				var ay = - Math.pow(w, 2) / h
+				if ((w < 0 && h < 0) || (w > 0 && h > 0)) {
+					deg = - deg
 				}
-				console.log(s2,x0,deg)
-				if ((s1 > 0 && s2 < 0) || (s1 < 0 && s2 > 0)) deg = - deg
-				// if (s2 > 0) {deg = - deg;console.log('> 0',deg);}
-				box.style.transform = 'rotate3d(' + w + ',' + x0 + ',0,' + deg + 'deg)'
-				// console.log(box.style.transform)
-				// console.log(center, mouse)
-				// console.log(getDistance(mouse, center))
+				console.log('x==>',w, 'y==>', ay, 'deg==>', deg)
+				box.style.transform = 'rotate3d(' + w + ',' + ay + ',0,' + deg + 'deg)'
 			}, false)
-			box.addEventListener('mouseleave', function(e){
+			box.addEventListener('mouseout', function(e){
 				box.style.transform = 'none'
 			},false)
 		})()

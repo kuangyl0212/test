@@ -15,12 +15,12 @@
 		body {
 			width: 100%;
 			height: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			/*display: flex;*/
+			/*justify-content: center;*/
+			/*align-items: center;*/
 		}
 		.container {
-			width: 500px;
+			width: 800px;
 			height: 300px;
 			border-radius: 10px;
 			background-color: #ccc;
@@ -29,7 +29,7 @@
 			background-size: cover;
 		}
 		.box {
-			width: 500px;
+			width: 800px;
 			height: 300px;
 			border-radius: 10px;
 			/*background-color: #ccc;*/
@@ -76,20 +76,40 @@
 				y: origin.y + H / 2
 			}
 			box.addEventListener('mousemove',function(e) {
+				console.log(e.clientX,e.clientY)
 				var mouse = {
 					x: e.clientX,
 					y: e.clientY
 				}
-				var w = (mouse.x - center.x) / 2
-				var h = (mouse.y - center.y) / 2
-				var l = getDistance(mouse, center)
-				var deg = base * (l / (L / 2))
-				var ay = - Math.pow(w, 2) / h
-				if ((w < 0 && h < 0) || (w > 0 && h > 0)) {
-					deg = - deg
+				var w = (mouse.x - center.x)
+				var h = (mouse.y - center.y)
+				// var l = getDistance(mouse, center)
+				// var deg = base * (l / (L / 2))
+				// var ay = - Math.pow(w, 2) / h
+				// if ((w < 0 && h < 0) || (w > 0 && h > 0)) {
+				// 	deg = - deg
+				// }
+				// console.log('x==>',w, 'y==>', ay, 'deg==>', deg)
+				// box.style.transform = 'rotate3d(' + w + ',' + ay + ',0,' + deg + 'deg)'
+				console.log(w,h)
+				if (w > 0 && h < 0) {
+					console.log('right top')
+					w = - w
 				}
-				console.log('x==>',w, 'y==>', ay, 'deg==>', deg)
-				box.style.transform = 'rotate3d(' + w + ',' + ay + ',0,' + deg + 'deg)'
+				else if (w > 0 && h > 0) {
+					console.log('right bottom')
+					h = - h
+				}
+				else if (w < 0 && h < 0) {
+					console.log('left top')
+					h = - h
+				}
+				else if (w < 0 && h > 0) {
+					console.log('left bottom')
+					w = - w
+				}
+				console.log(h ,w)
+				box.style.transform = 'rotateX(' + h*base + 'deg) rotateY(' + w*base + 'deg)'
 			}, false)
 			box.addEventListener('mouseout', function(e){
 				box.style.transform = 'none'
